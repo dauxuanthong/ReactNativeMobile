@@ -1,0 +1,31 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
+}
+
+model User{
+  id String @id @default(uuid())
+  address String @unique
+  propertyType String 
+  bedrooms String
+  startDate DateTime 
+  endDate DateTime 
+  price String
+  furnitureType String?
+  name String
+  note String?
+  addNote AddNote?
+}
+
+model AddNote{
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references:[id], onDelete: Cascade)
+  userId String
+  propertyTypeNote String 
+  bedroomsNote String
+  furnitureTypeNote String?
+}
